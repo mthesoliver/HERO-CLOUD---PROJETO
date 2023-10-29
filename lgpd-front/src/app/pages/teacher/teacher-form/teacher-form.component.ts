@@ -43,12 +43,7 @@ export class TeacherFormComponent {
       ]
     }
   ];
-
-  onSubmit(){
-    
-  }
-
-  /*
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -72,6 +67,31 @@ export class TeacherFormComponent {
     });
   }
 
+
+  async onSubmit():Promise <void>{
+    if(this.form.valid){
+      if(this.model?.id !== undefined && this.model?.id !== null){
+        this.teacher = await this.teacherService.put<any>({
+          url: `http://localhost:3000/updateTeacher/${this.model?.id}`,
+          params:{
+
+          },
+          data: this.model
+        });
+      }else{
+        delete this.model?.id;
+        await this.teacherService.post<any>({
+          url: `http://localhos:3000/addTeacher`,
+          params:{
+
+          },
+          data: this.model
+        });
+      }
+    }
+    await this.router.navigate(['/teachers']);
+  }
+
   
-  */
+  
 }

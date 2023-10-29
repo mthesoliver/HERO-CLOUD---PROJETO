@@ -20,7 +20,8 @@ export class TeacherListComponent implements OnInit {
   constructor(private teacherService: TeacherService, private sharedService: SharedService) { }
 
   async ngOnInit(): Promise<void> {
-    this.courseLabel = await this.sharedService.convertCourseToOption();
+    await this.listTeachers();
+    this.sharedService.getCourses().subscribe(course => this.courseLabel = course);
   }
 
   getLabelCourse(value: string):string | undefined{

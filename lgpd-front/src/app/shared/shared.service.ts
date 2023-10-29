@@ -14,18 +14,18 @@ export interface Params {
     providedIn: 'root'
 })
 export class SharedService {
-
-    users: Array<{ id: string, first_name: string }> = [];
-    courses: Array<{ id: string, name: string }> = [];
+    
+    users: Array<{ value: string, label: string }> = [];
+    courses: Array<{ value: string, label: string }> = [];
 
     userLabel: Array<{value: string, label: string}> = [];
     courseLabel: Array<{value: string, label: string}> = [];
 
     async convertUserToOption(): Promise<any[]>{
-        this.users.forEach((user:{id: string, first_name:string})=>{
+        this.users.forEach((user:{value: string, label:string})=>{
             let u = {
-                value: user.id.toString(),
-                label: user.first_name
+                value: user.value.toString(),
+                label: user.label
             }
             this.userLabel.push(u);
         });
@@ -33,23 +33,23 @@ export class SharedService {
     };
 
     async convertCourseToOption(): Promise<any[]>{
-        this.courses.forEach((courses:{id: string, name:string})=>{
+        this.courses.forEach((courses:{value: string, label:string})=>{
             let c = {
-                value: courses.id.toString(),
-                label: courses.name
+                value: courses.value.toString(),
+                label: courses.label
             }
             this.courseLabel.push(c);
         });
         return this.courseLabel;
     };
 
-    /*
+    
     getUsers(): Observable<any[]> {
         return this.http
             .get("http://localhost:3000/getAllUsers")
             .pipe(
                 map(x => {
-                    Object.values(x).map((_user) => {
+                    Object.values(x).map((_user ) => {
                         let u = { value: _user.id, label: _user.first_name }
                         this.users.push(u);
                     })
@@ -65,7 +65,7 @@ export class SharedService {
             .get("http://localhost:3000/getAllCourses")
             .pipe(
                 map(x => {
-                    Object.values(x).map((_course) => {
+                    Object.values(x).map((_course ) => {
                         let c = { value: _course.id, label: _course.name }
                         this.courses.push(c);
                     })
@@ -75,6 +75,6 @@ export class SharedService {
                 })
             );
     }
-    */
-    constructor(private userService:UserService, private coursesService:CourseService) {}
+    
+    constructor(private userService:UserService, private coursesService:CourseService, private http: HttpClient) {}
 }
